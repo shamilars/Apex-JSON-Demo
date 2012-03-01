@@ -1,0 +1,5 @@
+<apex:page controller="GoogleLoginController" action="{!login}">
+	<script>
+		window.location.href = '/{!recordID}';
+	</script>	
+</apex:page>
