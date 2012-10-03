@@ -1,0 +1,61 @@
+<apex:page controller="CreateCalendarEventController" sideBar="false">
+	<apex:outputPanel id="errorPanel">	
+		<apex:pageMessages />
+	</apex:outputPanel>	
+	<apex:form >
+	<apex:outputPanel id="mainPanel" >
+	<apex:pageBlock title="Create Google Calendar Event">
+		<apex:pageBlockSection title="Event summary" columns="2">
+			<apex:selectList id="timeZone" value="{!selectedCalendarId}" size="1" label="Select Calendar: " required="true">
+				<apex:selectOptions value="{!calendars}"/>
+            </apex:selectList>
+            <apex:pageBlockSectionItem />
+            <apex:inputText value="{!inputCalendarEvent.summary}" label="Summary: " required="true"/>
+			<apex:inputText value="{!inputCalendarEvent.location}" label="Location: " required="true"/>			
+			<apex:outputText value="{!inputCalendarEvent.start.gDatetime}" label="Start: " />
+			<apex:outputText value="{!inputCalendarEvent.gEnd.gDatetime}" label="End: " />
+		</apex:pageBlockSection>
+		<apex:pageBlockSection title="Reminders" columns="2">
+			<apex:selectList value="{!inputCalendarEvent.reminders.overrides[0].method}" size="1" label="Reminder 1 Method: " required="true">
+				<apex:selectOption itemValue="email" itemLabel="email"/>
+				<apex:selectOption itemValue="popup" itemLabel="popup"/>
+	        </apex:selectList>
+	        <apex:selectList value="{!inputCalendarEvent.reminders.overrides[1].method}" size="1" label="Reminder 2 Method: " required="true">
+	            <apex:selectOption itemValue="email" itemLabel="email"/>
+				<apex:selectOption itemValue="popup" itemLabel="popup"/>
+	        </apex:selectList>
+			<apex:inputText value="{!inputCalendarEvent.reminders.overrides[0].minutes}" label="# of minutes for reminder 1: " required="true"/>
+	        <apex:inputText value="{!inputCalendarEvent.reminders.overrides[1].minutes}" label="# of minutes for reminder 2: " required="true"/>
+		</apex:pageBlockSection>
+		<apex:pageBlockSection title="Attendees" columns="2">
+			<apex:inputText value="{!inputCalendarEvent.attendees[0].email}" label="Attendee 1 Email: " required="true"/>
+	        <apex:inputText value="{!inputCalendarEvent.attendees[1].email}" label="Attendee 2 Email: " required="true"/>
+	        <apex:inputCheckbox value="{!inputCalendarEvent.attendees[0].optional}" label="Is Optional: " required="true"/>
+	        <apex:inputCheckbox value="{!inputCalendarEvent.attendees[1].optional}" label="Is Optional: " required="true"/>
+	        <apex:inputText value="{!inputCalendarEvent.attendees[0].additionalGuests}" label="# of Additional Guests: " required="true"/>
+	        <apex:inputText value="{!inputCalendarEvent.attendees[1].additionalGuests}" label="# of Additional Guests: " required="true"/>
+	        <apex:pageBlockSectionItem />
+	        <apex:pageBlockSectionItem dataStyle="text-align:center;">
+	        	<apex:commandButton action="{!createCalendarEvent}" value="Create Calendar Event" rerender="mainPanel, errorPanel"/>
+	        </apex:pageBlockSectionItem>
+		</apex:pageBlockSection>
+		<apex:pageBlockSection title="Calendar Event Output" columns="2" id="calendarOutputPanel" rendered="{!isResponseReady}">
+			<apex:outputText value="{!responseCalendarEvent.id}" label="Id: " />
+			<apex:outputText value="{!responseCalendarEvent.htmlLink}" label="htmlLink: " />
+			<apex:outputText value="{!responseCalendarEvent.created}" label="created: " />
+			<apex:outputText value="{!responseCalendarEvent.summary}" label="Summary: " />
+			<apex:outputText value="{!responseCalendarEvent.location}" label="Location: " />			
+			<apex:outputText value="{!responseCalendarEvent.sequence}" label="Sequence: " />
+			<apex:outputText value="{!responseCalendarEvent.start.gDatetime}" label="Start Time: " />
+			<apex:outputText value="{!responseCalendarEvent.gEnd.gDatetime}" label="End Time: " />
+			<apex:outputText value="{!inputCalendarEvent.attendees[0].email}" label="Attendee 1 Email: " />
+	        <apex:outputText value="{!inputCalendarEvent.attendees[1].email}" label="Attendee 2 Email: " />
+	        <apex:outputText value="{!inputCalendarEvent.attendees[0].optional}" label="Is Optional: " />
+	        <apex:outputText value="{!inputCalendarEvent.attendees[1].optional}" label="Is Optional: " />
+	        <apex:outputText value="{!inputCalendarEvent.attendees[0].additionalGuests}" label="# of Additional Guests: " />
+	        <apex:outputText value="{!inputCalendarEvent.attendees[1].additionalGuests}" label="# of Additional Guests: " />
+		</apex:pageBlockSection>
+	</apex:pageBlock>	
+	</apex:outputPanel>
+	</apex:form>
+</apex:page>

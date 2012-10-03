@@ -1,9 +1,8 @@
 /*
-*	Represents the Google Calendar 
+*	Represents Google Calendar resource 
 *	Implements JSONSerializable interface (serialize() and deserialize() methods) using System.JSON
 */
 public class GoogleCalendar implements JSONSerializable {
-	//fields
 	public String id {get;set;}
 	public String kind {get;set;}
 	public String etag {get;set;}
@@ -11,35 +10,42 @@ public class GoogleCalendar implements JSONSerializable {
 	public String description {get;set;}
 	public String location {get;set;}
 	public String timeZone {get;set;}
-	//constructors
-	public GoogleCalendar() {}
-	public GoogleCalendar(String summary, String description, String location, String timeZone) {
-		this.summary = summary;
-		this.description = description;
-		this.location = location;
-		this.timeZone = timeZone;
+	public String summaryOverride {get;set;}
+	public String colorId {get;set;}
+	public Boolean hidden {get;set;}
+	public Boolean selected {get;set;}
+	public String accessRole {get;set;}
+	public List<GoogleReminderOverride> defaultReminders { 
+		get {
+			if(defaultReminders == null)
+				defaultReminders = new List<GoogleReminderOverride>();
+			return defaultReminders;
+		}
+		set;
 	}
-	
 	/*
 	* Serializes the current object using System.JSON
 	*/
 	public String serialize(){
 		return JSON.serialize(this);
 	}
-	
 	/*
 	* Deserializes the current object using System.JSON
 	*/
 	public void deserialize(String jsonString) {
-		//Note: every field in the JSON calendar object must have its corresponding field in the GoogleCalendar Apex class
-		//otherwise System.JSONException: Unknown field: <field_name> is raised
-		GoogleCalendar gCal = (GoogleCalendar) JSON.deserialize(jsonString, GoogleCalendar.class);
-		this.id = gCal.id;
-		this.kind = gCal.kind;
-		this.etag = gCal.etag;
-		this.summary = gCal.summary;
-		this.description = gCal.description;
-		this.location = gCal.location;
-		this.timeZone = gCal.timeZone;
+		GoogleCalendar gCalendar = (GoogleCalendar) JSON.deserialize(jsonString, GoogleCalendar.class);
+		this.id = gCalendar.id;
+		this.kind = gCalendar.kind;
+		this.etag = gCalendar.etag;
+		this.summary = gCalendar.summary;
+		this.description = gCalendar.description;
+		this.location = gCalendar.location;
+		this.timeZone = gCalendar.timeZone;
+		this.summaryOverride = gCalendar.summaryOverride;
+		this.colorId = gCalendar.colorId;
+		this.hidden = gCalendar.hidden;
+		this.selected = gCalendar.selected;
+		this.accessRole = gCalendar.accessRole;
+		this.defaultReminders = gCalendar.defaultReminders;
 	}
 }

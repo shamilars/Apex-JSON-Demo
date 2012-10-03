@@ -4,56 +4,6 @@
 * 	Note: Google calendar event may have more fields than the Apex class
 */
 public class GoogleCalendarEvent implements JSONSerializable {
-	/**
-	* 	Represents the event attendee object
-	*/	
-	public class GoogleEventAttendee {
-		public String email {get;set;}
-		public String displayName {get;set;}
-		public Boolean organizer {get;set;}
-		public Boolean self {get;set;}
-		public Boolean resource {get;set;}
-		public Boolean optional {get;set;}
-		public String responseStatus {get;set;}
-		public String comment {get;set;}
-		public Integer additionalGuests {get;set;}
-	}
-	/*
-	*	Represents the start time, end time for timed events
-	*/
-	public class GoogleEventTime {
-		//corresponding JSON fieldName is 'date', which is an Apex reserved keyword, hence renaming
-		public Date gDate {get;set;}
-		//reserved 'datetime' keyword renamed				
-		public DateTime gDatetime {get;set;}		
-		public Date timeZone {get;set;}
-	}
-	/**
-	*	Represents the calendar reminder
-	*/	
-	public class GoogleReminder {
-		public Boolean useDefault {get;set;}
-		public List<GoogleReminderOverride> overrides {	
-			get {
-				if(overrides == null)
-					overrides = new List<GoogleReminderOverride>();
-				return overrides;
-			}
-			set;
-		}		
-	}
-	/**
-	*	Represents the calendar reminder's override objects
-	*/
-	public class GoogleReminderOverride {
-		public String method {get;set;}
-		public Integer minutes {get;set;}
-		public GoogleReminderOverride(String method, Integer minutes) {
-			this.method = method;
-			this.minutes = minutes;
-		}
-	}
-	//fields of the GoogleCalendarEvent
 	public String id {get;set;}
 	public String htmlLink {get;set;}
 	public DateTime created {get;set;}
@@ -276,7 +226,7 @@ public class GoogleCalendarEvent implements JSONSerializable {
 						while(parser.nextToken() != null){
 							if(parser.getCurrentToken() == JSONToken.START_OBJECT){
 								//read GoogleEventAttendee object
-								GoogleEventAttendee gEventAttendee = (GoogleEventAttendee) parser.readValueAs(GoogleCalendarEvent.GoogleEventAttendee.class); 
+								GoogleEventAttendee gEventAttendee = (GoogleEventAttendee) parser.readValueAs(GoogleEventAttendee.class); 
 								this.attendees.add(gEventAttendee); 
 							}
 							else if(parser.getCurrentToken() == JSONToken.END_ARRAY){
@@ -288,7 +238,7 @@ public class GoogleCalendarEvent implements JSONSerializable {
 				else if(fieldName == 'reminders'){	//reminders is an object					
 					if(parser.getCurrentToken() == JSONToken.START_OBJECT){
 						//instead of reading manually, like for 'gEnd' and 'start' use readValueAs()
-						GoogleReminder reminders = (GoogleReminder) parser.readValueAs(GoogleCalendarEvent.GoogleReminder.class); 
+						GoogleReminder reminders = (GoogleReminder) parser.readValueAs(GoogleReminder.class); 
 						this.reminders = reminders;
 					}					
 				}				

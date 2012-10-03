@@ -1,0 +1,32 @@
+<apex:page controller="CreateCalendarController" sideBar="false">
+<apex:form >
+	<apex:outputPanel id="errorPanel">	
+		<apex:pageMessages />
+	</apex:outputPanel>
+	<apex:outputPanel id="mainPanel">
+	<apex:pageBlock title="Create Calendar">
+		<apex:pageBlockSection title="Calendar Input" columns="2">
+			<apex:inputText value="{!inputCalendar.summary}" label="Summary: " required="true"/>
+			<apex:inputText value="{!inputCalendar.description}" label="Description: " required="true"/>
+			<apex:inputText value="{!inputCalendar.location}" label="Location: " required="true"/>			
+			<apex:selectList id="timeZone" value="{!inputCalendar.timeZone}" size="1" label="Time Zone: " required="true">
+	            <apex:selectOption itemValue="America/Los_Angeles" itemLabel="America/Los_Angeles"/>
+	        </apex:selectList> 
+	        <apex:pageBlockSectionItem />
+	        <apex:pageBlockSectionItem dataStyle="text-align:center;">
+	        	<apex:commandButton action="{!createCalendar}" value="Create Calendar" rerender="mainPanel, errorPanel"/>
+	        </apex:pageBlockSectionItem>
+		</apex:pageBlockSection>
+		<apex:pageBlockSection title="Calendar Output" columns="2" id="calendarOutputPanel" rendered="{!isResponseReady}">
+			<apex:outputText value="{!responseCalendar.id}" label="Id: " />
+			<apex:outputText value="{!responseCalendar.etag}" label="etag: " />
+			<apex:outputText value="{!responseCalendar.kind}" label="kind: " />
+			<apex:outputText value="{!responseCalendar.summary}" label="Summary: " />
+			<apex:outputText value="{!responseCalendar.description}" label="Description: " />
+			<apex:outputText value="{!responseCalendar.location}" label="Location: " />			
+			<apex:outputText value="{!responseCalendar.timeZone}" label="Time Zone: " />
+		</apex:pageBlockSection>
+	</apex:pageBlock>	
+	</apex:outputPanel>
+</apex:form>
+</apex:page>

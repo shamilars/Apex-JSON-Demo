@@ -6,21 +6,21 @@ private class GoogleCalendarEventTest {
 		GoogleCalendarEvent gCalEventOne = new GoogleCalendarEvent();
 		gCalEventOne.summary = 'My new event';
 		gCalEventOne.location = 'Mountain View, CA';
-		gCalEventOne.start = new GoogleCalendarEvent.GoogleEventTime();
+		gCalEventOne.start = new GoogleEventTime();
 		gCalEventOne.start.gDatetime = System.now().addDays(1);
-		gCalEventOne.gEnd = new GoogleCalendarEvent.GoogleEventTime();
+		gCalEventOne.gEnd = new GoogleEventTime();
 		gCalEventOne.gEnd.gDatetime = System.now().addDays(1).addHours(1);
 		//add reminders
-		gCalEventOne.reminders = new GoogleCalendarEvent.GoogleReminder();
+		gCalEventOne.reminders = new GoogleReminder();
 		gCalEventOne.reminders.useDefault = false;		
-		gCalEventOne.reminders.overrides = new List<GoogleCalendarEvent.GoogleReminderOverride>(); 
+		gCalEventOne.reminders.overrides = new List<GoogleReminderOverride>();
 		for(Integer i=1; i<=2; i++){
-			gCalEventOne.reminders.overrides.add(new GoogleCalendarEvent.GoogleReminderOverride('email', i)); //reminder in 'i' minutes				
+			gCalEventOne.reminders.overrides.add(new GoogleReminderOverride('email', i)); //reminder in 'i' minutes				
 		}		
 		//add attendees
-		gCalEventOne.attendees = new List<GoogleCalendarEvent.GoogleEventAttendee>();
+		gCalEventOne.attendees = new List<GoogleEventAttendee>();
 		for(Integer i=0; i<2; i++){			
-			GoogleCalendarEvent.GoogleEventAttendee gEventAttendee = new GoogleCalendarEvent.GoogleEventAttendee();
+			GoogleEventAttendee gEventAttendee = new GoogleEventAttendee();
 			gEventAttendee.email = 'testemail-' + i + '@test.com';
 			gEventAttendee.optional = Math.mod(i,2) == 0 ? true : false;	//true for even, false for odd
 			gEventAttendee.additionalGuests = i+1;	//additional guests

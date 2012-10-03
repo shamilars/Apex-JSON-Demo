@@ -60,7 +60,9 @@
     </fields>
     <fields>
         <fullName>Scope__c</fullName>
+        <description>Scope of API access, e.g. &quot;https://www.googleapis.com/auth/calendar&quot; provides read-write access to Calendars, Calendar Events and Calendar ACLs</description>
         <externalId>false</externalId>
+        <inlineHelpText>Scope of API access, e.g. &quot;https://www.googleapis.com/auth/calendar&quot; provides read-write access to Calendars, Calendar Events and Calendar ACLs</inlineHelpText>
         <label>Scope</label>
         <length>255</length>
         <required>false</required>
@@ -118,12 +120,12 @@
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <webLinks>
-        <fullName>Google_Login</fullName>
+        <fullName>Authenticate</fullName>
         <availability>online</availability>
         <description>Logs in to Google API</description>
         <displayType>button</displayType>
         <linkType>url</linkType>
-        <masterLabel>Google Login</masterLabel>
+        <masterLabel>Authenticate</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
         <url>/apex/GoogleLogin?id={!Google_App__c.Id}</url>
